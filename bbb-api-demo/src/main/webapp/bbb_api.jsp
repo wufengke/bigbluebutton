@@ -583,7 +583,7 @@ public String getRecordingsURL(String meetingID) {
 	return BigBlueButtonURL + "api/getRecordings?" + record_parameters + "&checksum="
 		+ checksum("getRecordings" + record_parameters + salt);
 }
-
+/**
 public String getRecordings(String meetingID) {
 	//recordID,name,description,starttime,published,playback,length
 	String newXMLdoc = "<recordings>";
@@ -662,7 +662,7 @@ public String getRecordings(String meetingID) {
 	newXMLdoc += "</recordings>";
 	return newXMLdoc;
 }
-
+**/
 public String getPublishRecordingsURL(boolean publish, String recordID) {
 	String publish_parameters = "recordID=" + urlEncode(recordID)
 		+ "&publish=" + publish;

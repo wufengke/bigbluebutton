@@ -45,7 +45,7 @@ if (request.getParameterMap().isEmpty()) {
 	%> 
 <%@ include file="demo_header.jsp"%>
 
-<h2>Join Demo Meeting</h2>
+<h2>Join Demo Meeting (JavaScript API Client)</h2>
 
 
 <FORM NAME="form1" METHOD="GET"> 
@@ -84,12 +84,19 @@ if (request.getParameterMap().isEmpty()) {
 	// Got an action=create
 	//
 	
-	String username = request.getParameter("username");
 	String url = BigBlueButtonURL.replace("bigbluebutton/","demo/");
 	// String preUploadPDF = "<?xml version='1.0' encoding='UTF-8'?><modules><module name='presentation'><document url='"+url+"pdfs/sample.pdf'/></module></modules>";
+	//java.util.Random testIDGen = new java.util.Random();
+	//int userID = testIDGen.nextInt(99999);
 	
-	String joinURL = getJoinURL(request.getParameter("username"), "Demo Meeting", "false", null, null, null);
-	System.out.println("joinURL:" + joinURL);
+	// String joinURL = getJoinURL(request.getParameter("username"), "Demo Meeting", "false", null, null, null);
+
+        String meeting_ID = createMeeting( "Demo Meeting", null, null, null, null, null);
+
+	String clientURL = BigBlueButtonURL.replace("bigbluebutton/","client/demo11.html");
+        String joinURL = getJoinMeetingURL(request.getParameter("username"), "Demo Meeting", "mp", clientURL );
+
+
 	if (joinURL.startsWith("http://")) { 
 %>
 

@@ -21,6 +21,8 @@ Author: Fred Dixon <ffdixon@bigbluebutton.org>
 -->
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ page import="com.cyou.util.ConnectionUtil" %>
+<%@ page import="java.sql.*" %>
 <% 
 	request.setCharacterEncoding("UTF-8"); 
 	response.setCharacterEncoding("UTF-8"); 
@@ -42,11 +44,8 @@ Author: Fred Dixon <ffdixon@bigbluebutton.org>
 		// Assume we want to create a meeting
 		//
 %>
-
 <%@ include file="demo_header.jsp"%>
-
-<h2>Join Selected</h2>
-
+<h2>选择加入会议</h2>
 
 <FORM NAME="form1" METHOD="GET">
 <table cellpadding="5" cellspacing="5" style="width: 400px; ">
@@ -101,8 +100,15 @@ Author: Fred Dixon <ffdixon@bigbluebutton.org>
 		//
 
 		String username = request.getParameter("username");
-		String meetingID = request.getParameter("meetingID");
-
+		String courseId = request.getParameter("meetingID");
+		String meetingID = "";
+		Connection con =  ConnectionUtil.getConnection();
+		Statement stat = con.createStatement();
+		ResultSet rs = stat.executeQuery("select c.COURSE_TITLE as courseTitle from COURSE_BRIEF c where c.COURSE_ID='" + courseId + "'");
+		while(rs.next()){
+		  meetingID = rs.getString("courseTitle");
+		}
+		ConnectionUtil.release(rs,stat,con);
 		// String joinURL = getJoinURL(username, meetingID, "Welcome to " + meetingID );
 		// Update: added record parameter, default false
 		String url = BigBlueButtonURL.replace("bigbluebutton/","demo/");
@@ -125,7 +131,8 @@ Error: getJoinURL() failed
 <p /><%=joinURL%> <%
  	}
  	}
- %> <%@ include file="demo_footer.jsp"%>
+ %> 
+ <%@ include file="demo_footer.jsp"%>
 </body>
 </html>
 
