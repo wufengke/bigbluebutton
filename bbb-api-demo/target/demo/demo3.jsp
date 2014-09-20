@@ -21,6 +21,9 @@ Author: Fred Dixon <ffdixon@bigbluebutton.org>
 -->
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ page import="com.cyou.util.ConnectionUtil" %>
+<%@ page import="java.sql.*" %>
+<%@page import="org.apache.commons.lang.StringUtils"%>
 <% 
 	request.setCharacterEncoding("UTF-8"); 
 	response.setCharacterEncoding("UTF-8"); 
@@ -224,36 +227,26 @@ Passwords:
 		//
 		// Got an action=create
 		//
-
-		String username = request.getParameter("username");
-		String meetingID = request.getParameter("meetingID");
-		String password = request.getParameter("password");
+		String userId = request.getParameter("username");
+		String meetingID = "";
+		String password = "";
 		
-		meeting = allMeetings.get( meetingID );
-		
-		String welcomeMsg = meeting.get( "welcomeMsg" );
-		String logoutURL = meeting.get( "logoutURL" );
-		Integer voiceBridge = Integer.parseInt( meeting.get( "voiceBridge" ).trim() );
-
-		String viewerPW = meeting.get( "viewerPW" );
-		String moderatorPW = meeting.get( "moderatorPW" );
-		
-		//
-		// Check if we have a valid password
-		//
-		if ( ! password.equals(viewerPW) && ! password.equals(moderatorPW) ) {
-%>
-
-Invalid Password, please <a href="javascript:history.go(-1)">try again</a>.
-
-<%
-			return;
+		Connection con =  ConnectionUtil.getConnection();
+		Statement stat = con.createStatement();
+		ResultSet rs = stat.executeQuery("select c.COURSE_TITLE as courseTitle,c.COURSE_PASSWORD as code from PRIVATE_COURSE c where c.USER_ID='" + userId + "'");
+		while(rs.next()){
+		  meetingID = rs.getString("courseTitle");
+		  password = rs.getString("code");
 		}
+		ConnectionUtil.release(rs,stat,con);
 		
+		String welcomeMsg = "欢迎您来到9527在线课堂";
+		String logoutURL = "http://www.phas.cn/index";
+		Integer voiceBridge = Integer.parseInt( meeting.get( "voiceBridge" ).trim() );
 		//
 		// Looks good, let's create the meeting
 		//
-		String meeting_ID = createMeeting( meetingID, welcomeMsg, moderatorPW, viewerPW, voiceBridge, logoutURL );
+		String meeting_ID = createMeeting( meetingID, welcomeMsg, password, password, voiceBridge, logoutURL );
 		
 		//
 		// Check if we have an error.
@@ -273,7 +266,7 @@ Error: createMeeting() failed
 		// We've got a valid meeting_ID and passoword -- let's join!
 		//
 		
-		String joinURL = getJoinMeetingURL(username, meeting_ID, password, null);
+		String joinURL = getJoinMeetingURL(userId, meeting_ID, password, null);
 %>
 
 <script language="javascript" type="text/javascript">

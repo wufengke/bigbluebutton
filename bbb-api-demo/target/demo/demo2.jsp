@@ -23,6 +23,7 @@ Author: Fred Dixon <ffdixon@bigbluebutton.org>
 	pageEncoding="UTF-8"%>
 <%@ page import="com.cyou.util.ConnectionUtil" %>
 <%@ page import="java.sql.*" %>
+<%@page import="org.apache.commons.lang.StringUtils"%>
 <% 
 	request.setCharacterEncoding("UTF-8"); 
 	response.setCharacterEncoding("UTF-8"); 
@@ -114,8 +115,10 @@ Author: Fred Dixon <ffdixon@bigbluebutton.org>
 		String url = BigBlueButtonURL.replace("bigbluebutton/","demo/");
 		// String preUploadPDF = "<?xml version='1.0' encoding='UTF-8'?><modules><module name='presentation'><document url='"+url+"pdfs/sample.pdf'/></module></modules>";
 		// String joinURL = getJoinURL(username, meetingID, "false", "<br>Welcome to course: %%CONFNAME%%.<br>", null, preUploadPDF );
-		String joinURL = getJoinURL(username, meetingID, "false", null, null, null );
-
+		String joinURL = getJoinURL(username, meetingID, "false", "true", null, null );
+		if(StringUtils.isBlank(joinURL)){
+			response.sendRedirect("wwww.phas.cn/index");
+		}
 		if (joinURL.startsWith("http://")) {
 %>
 

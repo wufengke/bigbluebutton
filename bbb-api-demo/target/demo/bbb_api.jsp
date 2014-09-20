@@ -269,8 +269,11 @@ public String getJoinURLwithDynamicConfigXML(String username, String meetingID, 
         doc = parseXml( postURL( url, "" ) );
     } catch (Exception e) {
         e.printStackTrace();
+        return null;
     }
-
+	if(doc == null){
+		return null;
+	}
     if (!doc.getElementsByTagName("returncode").item(0).getTextContent().trim().equals("SUCCESS")) {
         //
         // Someting went wrong, return the error 
@@ -787,7 +790,7 @@ public static String postURL(String targetURL, String urlParameters, String cont
 		connection = (HttpURLConnection)url.openConnection();
 		connection.setRequestMethod("POST");
 		connection.setRequestProperty("Content-Type", contentType);
-		
+		connection.setConnectTimeout(10000);
 		connection.setRequestProperty("Content-Length", "" + 
 		Integer.toString(urlParameters.getBytes().length));
 		connection.setRequestProperty("Content-Language", "en-US");  
@@ -816,7 +819,6 @@ public static String postURL(String targetURL, String urlParameters, String cont
 		return response.toString();
 		
 	} catch (Exception e) {
-		
 		e.printStackTrace();
 		return null;
 		

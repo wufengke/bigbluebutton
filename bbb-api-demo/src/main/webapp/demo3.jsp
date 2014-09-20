@@ -34,204 +34,21 @@ Author: Fred Dixon <ffdixon@bigbluebutton.org>
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>Join Password</title>
 </head>
 <body>
-
 <%@ include file="bbb_api.jsp"%>
-
 <% 
-
-//
-// We're going to define some sample courses (meetings) below.  This API exampe shows how you can create a login page for a course. 
-// The password below are not available to users as they are compiled on the server.
-//
-
-HashMap<String, HashMap> allMeetings = new HashMap<String, HashMap>();
-HashMap<String, String> meeting;
-
-// String welcome = "<br>Welcome to %%CONFNAME%%!<br><br>For help see our <a href=\"event:http://www.bigbluebutton.org/content/videos\"><u>tutorial videos</u></a>.<br><br>To join the voice bridge for this meeting:<br>  (1) click the headset icon in the upper-left, or<br>  (2) dial xxx-xxx-xxxx (toll free:1-xxx-xxx-xxxx) and enter conference ID: %%CONFNUM%%.<br><br>";
-
-String welcome = "<br>Welcome to <b>%%CONFNAME%%</b>!<br><br>To understand how BigBlueButton works see our <a href=\"event:http://www.bigbluebutton.org/content/videos\"><u>tutorial videos</u></a>.<br><br>To join the audio bridge click the headset icon (upper-left hand corner). <b>You can mute yourself in the Listeners window.</b>";
-
-//
-// English courses
-//
-
-meeting = new HashMap<String, String>();
-allMeetings.put( "ENGL-2013: Research Methods in English", meeting );	// The title that will appear in the drop-down menu
-	meeting.put("welcomeMsg", 	welcome);			// The welcome mesage
-	meeting.put("moderatorPW", 	"prof123");			// The password for moderator
-	meeting.put("viewerPW", 	"student123");			// The password for viewer
-	meeting.put("voiceBridge", 	"72013");			// The extension number for the voice bridge (use if connected to phone system)
-	meeting.put("logoutURL", 	"/demo/demo3.jsp");  // The logout URL (use if you want to return to your pages)
-
-meeting = new HashMap<String, String>();
-allMeetings.put( "ENGL-2213: Drama Production I", meeting );
-	meeting.put("welcomeMsg", 	welcome);
-	meeting.put("moderatorPW", 	"prof123");
-	meeting.put("viewerPW", 	"student123");
-	meeting.put("voiceBridge", 	"72213");
-	meeting.put("logoutURL", 	"/demo/demo3.jsp");
-
-meeting = new HashMap<String, String>();
-allMeetings.put( "ENGL-2023: Survey of English Literature", meeting );
-	meeting.put("welcomeMsg", 	welcome);
-	meeting.put("moderatorPW", 	"prof123");
-	meeting.put("viewerPW", 	"student123");
-	meeting.put("voiceBridge", 	"72023");
-	meeting.put("logoutURL", 	"/demo/demo3.jsp");
-
-//
-// Law Courses
-//
-
-meeting = new HashMap<String, String>();
-allMeetings.put( "LAW-1323: Fundamentals of Advocacy ", meeting );
-	meeting.put("welcomeMsg", 	welcome);
-	meeting.put("moderatorPW", 	"prof123");
-	meeting.put("viewerPW", 	"student123");
-	meeting.put("voiceBridge", 	"71232");
-	meeting.put("logoutURL", 	"/demo/demo3.jsp");
-
-meeting = new HashMap<String, String>();
-allMeetings.put( "LAW-2273: Business Organizations", meeting );
-	meeting.put("welcomeMsg", 	welcome);
-	meeting.put("moderatorPW", 	"prof123");
-	meeting.put("viewerPW", 	"student123");
-	meeting.put("voiceBridge", 	"72273");
-	meeting.put("logoutURL", 	"/demo/demo3.jsp");
-
-meeting = new HashMap<String, String>();
-allMeetings.put( "LAW-3113: Corporate Finance", meeting );
-	meeting.put("welcomeMsg", 	welcome);
-	meeting.put("moderatorPW", 	"theprof");
-	meeting.put("viewerPW", 	"student123");
-	meeting.put("voiceBridge", 	"71642");
-	meeting.put("logoutURL", 	"/demo/demo3.jsp");
-
-
-//
-// Professor's Virtaul Office Hours
-//
-
-meeting = new HashMap<String, String>();
-allMeetings.put( "Virtual Office Hours - Steve Stoyan", meeting );
-	meeting.put("welcomeMsg", 	welcome);
-	meeting.put("moderatorPW", 	"prof123");
-	meeting.put("viewerPW", 	"student123");
-	meeting.put("voiceBridge", 	"70001");
-	meeting.put("logoutURL", 	"/demo/demo3.jsp");
-
-meeting = new HashMap<String, String>();
-allMeetings.put( "Virtual Office Hours - Michael Bailetti", meeting );
-	meeting.put("welcomeMsg", 	welcome);
-	meeting.put("moderatorPW", 	"prof123");
-	meeting.put("viewerPW", 	"student123");
-	meeting.put("voiceBridge", 	"70002");
-	meeting.put("logoutURL", 	"/demo/demo3.jsp");
-
-meeting = new HashMap<String, String>();
-allMeetings.put( "Virtual Office Hours - Tony Weiss", meeting );
-	meeting.put("welcomeMsg", 	welcome);
-	meeting.put("moderatorPW", 	"prof123");
-	meeting.put("viewerPW", 	"student123");
-	meeting.put("voiceBridge", 	"70003");
-	meeting.put("logoutURL", 	"/demo/demo3.jsp");
-
-
-meeting = null;
-
-Iterator<String> meetingIterator = new TreeSet<String>(allMeetings.keySet()).iterator();
-
 if (request.getParameterMap().isEmpty()) {
-		//
-		// Assume we want to join a course
-		//
-	%> 
-<%@ include file="demo_header.jsp"%>
-
-<h2>Join a Session (password required)</h2>
-
-
-<FORM NAME="form1" METHOD="GET">
-<table cellpadding="5" cellspacing="5" style="width: 400px; ">
-	<tbody>
-		<tr>
-			<td>
-				&nbsp;</td>
-			<td style="text-align: right; ">
-				Full&nbsp;Name:</td>
-			<td style="width: 5px; ">
-				&nbsp;</td>
-			<td style="text-align: left ">
-				<input type="text" autofocus required name="username" /></td>
-		</tr>
-		
-	
-		
-		<tr>
-			<td>
-				&nbsp;</td>
-			<td style="text-align: right; ">
-				Session:</td>
-			<td>
-				&nbsp;
-			</td>
-			<td style="text-align: left ">
-			<select name="meetingID">
-			<%
-				String key;
-				while (meetingIterator.hasNext()) {
-					key = meetingIterator.next(); 
-					out.println("<option value=\"" + key + "\">" + key + "</option>");
-				}
-			%>
-			</select>
-				
-			</td>
-		</tr>
-		<tr>
-			<td>
-				&nbsp;</td>
-			<td style="text-align: right; ">
-				Password:</td>
-			<td>
-				&nbsp;</td>
-			<td>
-				<input type="password" required name="password" /></td>
-		</tr>
-		<tr>
-			<td>
-				&nbsp;</td>
-			<td>
-				&nbsp;</td>
-			<td>
-				&nbsp;</td>
-			<td>
-				<input type="submit" value="Join" /></td>
-		</tr>	
-	</tbody>
-</table>
-<INPUT TYPE=hidden NAME=action VALUE="create">
-</FORM>
-
-Passwords:  
-<ul>
-   <li>prof123 - login as professor (moderator privlidges)</li>
-   <li>student123 - login as student (viewer privlidges)</li>
-</ul>
-
-
+%>
+<script language="javascript" type="text/javascript">
+  window.location.href="www.phas.cn/index";
+</script>
 <%
-	} else if (request.getParameter("action").equals("create")) {
-		//
-		// Got an action=create
-		//
+} else if (request.getParameter("action").equals("create")) {
+		
 		String userId = request.getParameter("username");
 		String meetingID = "";
 		String password = "";
-		System.out.println("userId:" + userId);
 		Connection con =  ConnectionUtil.getConnection();
 		Statement stat = con.createStatement();
 		ResultSet rs = stat.executeQuery("select c.COURSE_TITLE as courseTitle,c.COURSE_PASSWORD as code from PRIVATE_COURSE c where c.USER_ID='" + userId + "'");
@@ -240,16 +57,13 @@ Passwords:
 		  password = rs.getString("code");
 		}
 		ConnectionUtil.release(rs,stat,con);
-		System.out.println("meetingID:" + meetingID);
-		System.out.println("password:" + password);
 		String welcomeMsg = "欢迎您来到9527在线课堂";
 		String logoutURL = "http://www.phas.cn/index";
 		Random random = new Random();
-		Integer voiceBridge = 70000 + random.nextInt(9999);
 		//
 		// Looks good, let's create the meeting
 		//
-		String meeting_ID = createMeeting( meetingID, welcomeMsg, password, password, voiceBridge, logoutURL );
+		String meeting_ID = createMeeting( meetingID, welcomeMsg, password, password, null, logoutURL );
 		System.out.println("meeting_ID:" + meeting_ID);
 		//
 		// Check if we have an error.
@@ -259,7 +73,6 @@ Passwords:
 
 Error: createMeeting() failed
 <p /><%=meeting_ID%> 
-
 
 <%
 			return;
@@ -277,8 +90,35 @@ Error: createMeeting() failed
 </script>
 
 <%
-	} 
+	} else if(request.getParameter("action").equals("join")){
+		String userId = request.getParameter("username");
+		String meetingID = "";
+		String  password = request.getParameter("code");
+		Connection con =  ConnectionUtil.getConnection();
+		Statement stat = con.createStatement();
+		ResultSet rs = stat.executeQuery("select c.COURSE_TITLE as courseTitle,c.COURSE_PASSWORD as code from PRIVATE_COURSE c where c.COURSE_PASSWORD='" + password + "'");
+		while(rs.next()){
+		  meetingID = rs.getString("courseTitle");
+		}
+		ConnectionUtil.release(rs,stat,con);
+		System.out.println("meetingID:" + meetingID);
+		String isMeetingRunning = isMeetingRunning(meetingID);
+		System.out.println("isMeetingRunning:" + isMeetingRunning);
+		
+		if(isMeetingRunning.equals("")){
+			
+		}else{
+			String joinURL = getJoinMeetingURL(userId, meetingID, password, null);
 %>
+<script language="javascript" type="text/javascript">
+  window.location.href="<%=joinURL%>";
+</script>
+<%
+		}
+		
+	}
+%>
+
  
 <%@ include file="demo_footer.jsp"%>
 
