@@ -1,27 +1,4 @@
-<!--
-
-BigBlueButton - http://www.bigbluebutton.org
-
-Copyright (c) 2008-2009 by respective authors (see below). All rights reserved.
-
-BigBlueButton is free software; you can redistribute it and/or modify it under the 
-terms of the GNU Lesser General Public License as published by the Free Software 
-Foundation; either version 3 of the License, or (at your option) any later 
-version. 
-
-BigBlueButton is distributed in the hope that it will be useful, but WITHOUT ANY 
-WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A 
-PARTICULAR PURPOSE. See the GNU Lesser General Public License for more details.
-
-You should have received a copy of the GNU Lesser General Public License along 
-with BigBlueButton; if not, If not, see <http://www.gnu.org/licenses/>.
-
-Author: Fred Dixon <ffdixon@bigbluebutton.org>
-
--->
-
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="com.cyou.util.ConnectionUtil" %>
 <%@ page import="java.sql.*,java.util.*" %>
 <%@page import="org.apache.commons.lang.StringUtils"%>
@@ -29,7 +6,6 @@ Author: Fred Dixon <ffdixon@bigbluebutton.org>
 	request.setCharacterEncoding("UTF-8"); 
 	response.setCharacterEncoding("UTF-8"); 
 %>
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -41,7 +17,7 @@ Author: Fred Dixon <ffdixon@bigbluebutton.org>
 if (request.getParameterMap().isEmpty()) {
 %>
 <script language="javascript" type="text/javascript">
-  window.location.href="www.phas.cn/index";
+  window.location.href="http://class.agaokao.com/index";
 </script>
 <%
 } else if (request.getParameter("action").equals("create")) {
@@ -58,7 +34,7 @@ if (request.getParameterMap().isEmpty()) {
 		}
 		ConnectionUtil.release(rs,stat,con);
 		if(meetingID == null || "".equals(meetingID)){
-			String errorUrl = "http://www.phas.cn/member/my_podium?error=2";
+			String errorUrl = "http://class.agaokao.com/member/my_podium?error=2";
 			%>
 			<script language="javascript" type="text/javascript">
 		  		window.location.href="<%=errorUrl%>";
@@ -66,13 +42,13 @@ if (request.getParameterMap().isEmpty()) {
 			<%
 		}
 		String welcomeMsg = "欢迎您来到9527在线课堂";
-		String logoutURL = "http://www.phas.cn/member/my_course";
+		String logoutURL = "http://class.agaokao.com/member/my_course";
 		String isMeetingRunning = isMeetingRunning(meetingID);
 		if(!"true".equals(isMeetingRunning)){
 			String meeting_ID = createMeeting( meetingID, welcomeMsg, password, password, null, logoutURL );
 			System.out.println("meeting_ID:" + meeting_ID);
 			if( meeting_ID.startsWith("Error ")) {
-				String errorUrl = "http://www.phas.cn/member/my_podium?error=1";
+				String errorUrl = "http://class.agaokao.com/member/my_podium?error=1";
 			%>
 			<script language="javascript" type="text/javascript">
 		  		window.location.href="<%=errorUrl%>";
@@ -111,7 +87,7 @@ if (request.getParameterMap().isEmpty()) {
 		}
 		ConnectionUtil.release(rs,stat,con);
 		if(meetingID == null || "".equals(meetingID)){
-			String errorUrl = "http://www.phas.cn/member/my_course?error=2";
+			String errorUrl = "http://class.agaokao.com/member/my_course?error=2";
 			%>
 			<script language="javascript" type="text/javascript">
 		  		window.location.href="<%=errorUrl%>";
@@ -122,7 +98,7 @@ if (request.getParameterMap().isEmpty()) {
 		String isMeetingRunning = isMeetingRunning(meetingID);
 		System.out.println("isMeetingRunning:" + isMeetingRunning);
 		if(!"true".equals(isMeetingRunning)){
-			String errorUrl = "http://www.phas.cn/member/my_course?error=1";
+			String errorUrl = "http://class.agaokao.com/member/my_course?error=1";
 		%>
 		<script language="javascript" type="text/javascript">
 		  window.location.href="<%=errorUrl%>";
@@ -137,13 +113,10 @@ if (request.getParameterMap().isEmpty()) {
 		<%
 		}
 		
+	}else{
+		
 	}
 %>
-
- 
 <%@ include file="demo_footer.jsp"%>
-
 </body>
 </html>
-
-

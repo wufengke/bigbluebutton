@@ -117,7 +117,7 @@ Author: Fred Dixon <ffdixon@bigbluebutton.org>
 		// String joinURL = getJoinURL(username, meetingID, "false", "<br>Welcome to course: %%CONFNAME%%.<br>", null, preUploadPDF );
 		String joinURL = getJoinURL(username, meetingID, "false", "true", null, null );
 		if(StringUtils.isBlank(joinURL)){
-			response.sendRedirect("wwww.phas.cn/index");
+			response.sendRedirect("class.agaokao.com/index");
 		}
 		if (joinURL.startsWith("http://")) {
 %>

@@ -7,7 +7,7 @@ import java.sql.Statement;
 
 public class ConnectionUtil {
 	private static String[] props = { "com.mysql.jdbc.Driver",
-			"jdbc:mysql://127.0.0.1:3306/admin?useUnicode=true&characterEncoding=UTF-8", "portal_user", "abcd.1234"};
+			"jdbc:mysql://127.0.0.1:3306/admin?useUnicode=true&characterEncoding=UTF-8", "root", "passw0rd"};
 	static {
 		try {
 			// 加载驱动
